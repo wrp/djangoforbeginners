@@ -2,15 +2,18 @@
 
 FROM python:3.11-slim
 
+ENV PIP_DISABLE_PIP_VERSION_CHECK 1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-COPY accounts/ /var/www/chicory-auth
-COPY django_project/ /var/www/chicory-auth
-COPY manage.py  /var/www/chicory-auth
-COPY templates/ /var/www/chicory-auth
-COPY requirements.txt /var/www/chicory-auth
-COPY fly.toml /var/www/chicory-auth
+WORKDIR /code
 
+# Install dependencies
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
 
-RUN (cd /var/www/chicory-auth; pip install /var/www/chicory-auth  /var/www/chicory-auth/requirements.txt)
-RUN python /var/www/chicory-auth/manage.py migrate
-RUN python /var/www/chicory-auth/manage.py collectstatic
+# Copy project
+COPY . .
+
+RUN python manage.py migrate
+RUN python manage.py collectstatic
