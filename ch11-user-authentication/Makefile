@@ -2,6 +2,7 @@
 
 image ?= chicory-auth
 
+.PHONY: build run all
 all: build run
 
 run:
