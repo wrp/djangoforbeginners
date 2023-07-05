@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 RUN python manage.py migrate
-RUN python manage.py collectstatic
+RUN sh -c 'yes yes | python manage.py collectstatic'
