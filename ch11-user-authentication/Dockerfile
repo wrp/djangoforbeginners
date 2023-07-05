@@ -17,3 +17,6 @@ COPY . .
 
 RUN python manage.py migrate
 RUN sh -c 'yes yes | python manage.py collectstatic'
+
+CMD ["/code/manage.py", "runserver", "0.0.0.0:8080"]
+EXPOSE 8080/tcp
